@@ -126,9 +126,7 @@ const Dasboard = () => {
                 </div>
               </div>
             </div>
-
             <hr className="my-4 border-gray-200" />
-
 
             <div className="space-y-4">
               <div className="flex items-center gap-3">

@@ -6,19 +6,19 @@ import { useNavigate } from 'react-router';
 import { GlobalState } from '../Context/StateManagement';
 const Login = () => {
   const navigate = useNavigate()
-  const {setAuth} = useContext(GlobalState)
+  const { setAuth } = useContext(GlobalState)
   const [state, setState] = useState()
   const onFinish = async (values) => {
     try {
       const res = await axiosInstance.post("/register/LoginControl", values)
       try {
-    
-        sessionStorage.setItem("jwtToken",res?.data?.jwtToken)
-        console.log("login jwt token geneerated",res?.data?.jwtToken)
+
+        sessionStorage.setItem("jwtToken", res?.data?.jwtToken)
+        console.log("login jwt token geneerated", res?.data?.jwtToken)
         setState(res?.data?.message)
         setAuth(res?.data?.jwtToken)
-            console.log("successfull login ",res?.data?.message)
-            navigate("/dashboard")
+        console.log("successfull login ", res?.data?.message)
+        navigate("/dashboard")
       } catch {
         (err) => {
           setState(err?.data?.message)

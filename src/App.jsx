@@ -16,15 +16,15 @@ const App = () => {
   return (
     <Routes>
       {/* Layout = Header + Outlet */}
-        <Route path="/" element={<Layout />}>
+      <Route path="/" element={<Layout />}>
 
         {/* Public Routes */}
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
 
         {/* Protected Dashboard Routes */}
-        <Route 
-          path="/dashboard" 
+        <Route
+          path="/dashboard"
           indx
           element={
             <ProtectedRoute>

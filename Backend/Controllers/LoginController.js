@@ -11,14 +11,14 @@ const LoginControl = async (req, res, next) => {
 
     const { username, password } = LoginData
     console.log(username, password)
-    const registerDataCheck = await RegisterModel.find({username})
+    const registerDataCheck = await RegisterModel.find({ username })
 
 
     if (!registerDataCheck) {
         return res.status(400).json({ status: " user already does not exists" })
     }
 
-    const jwtToken = jwt.sign({username:username}, "simran", { expiresIn: "1h" });
+    const jwtToken = jwt.sign({ username: username }, "simran", { expiresIn: "1h" });
 
     res.cookie("jwtToken", jwtToken, {
         maxAge: 3600,

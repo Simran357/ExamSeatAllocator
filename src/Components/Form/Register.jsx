@@ -8,12 +8,10 @@ const Register = () => {
   const onFinish = async (values) => {
 
     try {
-
       const res = await axiosInstance.post("/register/registerControl", values)
       console.log("sucessfull resgistration",res)
       try {
         setState(res?.data?.message)
-
       } catch {
         (err) => {
           setState(err?.data?.message)
