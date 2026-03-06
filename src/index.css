@@ -1,1 +1,7 @@
 @import "tailwindcss";
+
+
+
+.css-var-root.ant-layout{
+  height: 100vh;
+}

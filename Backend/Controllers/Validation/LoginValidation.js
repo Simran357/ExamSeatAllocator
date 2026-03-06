@@ -1,17 +1,16 @@
 const Joi = require('joi');
 
 const LoginValidation =  Joi.object({
-  username: Joi.string()
-    .min(3)
-    .max(30)
-    .required(),
+  email: Joi.string().email().required()
+   ,
+   username:Joi.string().min(6).max(30),
 
   password: Joi.string()
     .min(6)
-    .required(),
+   ,
  confirmpassword: Joi.string()
     .min(6)
-    .required(),
+  
 
 });
 

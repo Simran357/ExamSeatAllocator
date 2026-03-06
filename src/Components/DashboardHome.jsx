@@ -1,5 +1,6 @@
-import { CalendarMonth } from '@mui/icons-material'
 import React from 'react'
+import { CalendarMonth } from '@mui/icons-material'
+
 import { PeopleAlt, EventAvailable, ChairAlt, VerticalAlignTop, PendingActions, ReportProblem, AddCircle, UploadFile, ArrowForwardIos, AddTask, FileUpload, Print } from '@mui/icons-material';
 
 export const stats = [
@@ -42,10 +43,9 @@ export const stats = [
     iconBg: "bg-green-100 text-green-600",
   },
 ];
-const Dasboard = () => {
-
+const DashboardHome = () => {
   return (
-    <>
+   <>
       <div className="w-full m-4 px-2 ">
 
         <section className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -205,8 +205,9 @@ const Dasboard = () => {
 
         </div>
       </div >
+    
     </>
   )
 }
 
-export default Dasboard
+export default DashboardHome

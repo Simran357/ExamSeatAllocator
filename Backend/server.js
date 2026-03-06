@@ -13,7 +13,7 @@ chief.use(cors({
 }))
 chief.use(routes)
 mongoose.connect("mongodb+srv://simran26788_db_user:Nrh89CxOUsKuqGiT@cluster0.bu7aqhe.mongodb.net/").then(()=>{
-    const port = 5001;
+    const port = 5002;
     chief.listen(port)
     console.log("connected to mongodb")
 }).catch((err)=>{

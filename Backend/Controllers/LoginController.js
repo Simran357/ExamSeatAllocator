@@ -1,24 +1,36 @@
 const RegisterModel = require("./model/user.model")
 const jwt = require("jsonwebtoken")
-
+const bcrypt = require("bcrypt")
 const LoginValidation = require("./Validation/LoginValidation")
 
 
 const LoginControl = async (req, res, next) => {
     console.log("server is running")
+     try {
     const LoginData = await LoginValidation.validateAsync(req.body)
-    console.log("success database", LoginData)
+    console.log(" login database", LoginData)
 
-    const { username, password } = LoginData
-    console.log(username, password)
-    const registerDataCheck = await RegisterModel.find({ username })
+    const { email,password,username } = LoginData
+    console.log(email, password)
+    const loginDataCheck = await RegisterModel.findOne({email })
 
-
-    if (!registerDataCheck) {
-        return res.status(400).json({ status: " user already does not exists" })
+console.log(loginDataCheck)
+    if (!loginDataCheck) {
+        return res.status(400).json({ status:false, message: " user already does not exists,please register first" })
     }
 
-    const jwtToken = jwt.sign({ username: username }, "simran", { expiresIn: "1h" });
+  const isPasswordMatch = await bcrypt.compare(password, loginDataCheck.password);
+
+if (!isPasswordMatch) {
+  return res.status(400).json({ message: "Invalid Password" });
+}
+    const userPayload = {
+   userId: loginDataCheck._id,
+  email: email,
+  username:username,
+  password: password,
+    }
+    const jwtToken = jwt.sign({ user : userPayload }, "simran", { expiresIn: "1h" });
 
     res.cookie("jwtToken", jwtToken, {
         maxAge: 3600,
@@ -27,12 +39,17 @@ const LoginControl = async (req, res, next) => {
     })
 
     res.status(200).json({
+        status:true,
         message: "user Login successfully",
         jwtToken: jwtToken
     }
 
     )
-    next()
+ } catch (error) {
+  next(error);
+  console.log("Error in registration:", error);
+ }
 }
+
 
 module.exports = LoginControl

@@ -1,35 +1,34 @@
 import React, { useState } from 'react';
 import { Button, Form, Input } from 'antd';
-import axios from 'axios';
 import axiosInstance from './Utils/axiosInstance';
+import { useNavigate } from 'react-router';
 const Register = () => {
-
+const naviagte = useNavigate()
   const [state, setState] = useState()
   const onFinish = async (values) => {
 
     try {
-      const res = await axiosInstance.post("/register/registerControl", values)
+      const res = await axiosInstance.post("/register/registercontrol", values)
       console.log("sucessfull resgistration",res)
       try {
         setState(res?.data?.message)
-      } catch {
-        (err) => {
+        naviagte("/")
+      } catch(err) {
           setState(err?.data?.message)
           console.log(err)
         }
-      }
-    } catch {
-      (err) => {
+      
+    } catch(err) {
         console.log(err)
       }
-    }
+    
   };
   const onFinishFailed = errorInfo => {
     console.log('Failed:', errorInfo);
   };
   return (<>
-    <div className='m-6'>
-      <section className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div className='m-20 p-6   flex flex-col  items-center'>
+        <section className="  p-20   rounded-xl border border-slate-100 bg-white shadow ">
 
         <Form
           name="wrap"
@@ -42,11 +41,14 @@ const Register = () => {
           colon={false}
           style={{ maxWidth: 600 }}
         >
-          <Form.Item label="username" name="username" rules={[{ required: true }]}>
+           <Form.Item label="Email" name="email" >
+            <Input />
+          </Form.Item>
+          <Form.Item label="username" name="username" >
             <Input />
           </Form.Item>
 
-          <Form.Item label="password" name="password" rules={[{ required: true }]}>
+          <Form.Item label="password" name="password" >
             <Input />
           </Form.Item>
 

@@ -1,186 +1,113 @@
-import * as React from 'react'
+import React, { useState } from 'react';
 import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Button,
-  Box,
-  Drawer,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  IconButton,
-  Divider,
-  Menu
-} from '@mui/material'
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  
+} from '@ant-design/icons';
+import { Button, Layout, Menu, theme } from 'antd';
+// import DashboardLayout from './Layout';
+import SeatPlan from './SeatPlan';
+import Settings from './Settings';
+import Courses from './Courses';
+import { CalendarMonth, DashboardCustomize, EventSeatOutlined, RoomPreferences, SettingsOutlined, SubjectOutlined } from '@mui/icons-material';
+import Rooms from './Rooms';
+import DateSheet from './DateSheet';
+import DashboardHome from './DashboardHome';
 
-import SchoolIcon from '@mui/icons-material/School'
+const { Header, Sider, Content } = Layout;
+const Adminlayout = () => {
+  const [collapsed, setCollapsed] = useState(false);
+  const [selectedKey,setSelectedKey] = useState()
+  const {
+    token: { colorBgContainer, borderRadiusLG },
+  } = theme.useToken();
 
-import { useNavigate, useLocation } from 'react-router'
-import { useState } from 'react'
-
-const Header = () => {
-  const [open, setOpen] = useState(false)
-  const navigate = useNavigate()
-  const location = useLocation()
-
-  const menuItems = [
-    { text: 'Dashboard', path: '/dashboard' },
-    { text: 'Courses', path: '/dashboard/courses' },
-    { text: 'Students', path: '/students' },
-    { text: 'Rooms', path: '/dashboard/rooms' },
-    { text: 'Date Sheet', path: '/dashboard/datesheet' },
-    { text: 'Seat Plan', path: '/dashboard/seatplan' },
-    { text: 'Login', path: '/login' },
-    { text: 'Register', path: '/register' },
-  ]
-
-  const isActive = (path) => location.pathname === path
-
-  const handleNavigate = (path) => {
-    navigate(path)
-    setOpen(false)
+  const Component = {
+     '1': <DashboardHome/>,
+     '2':< Courses/>,
+     '3':<Rooms/>,
+  '4': < SeatPlan />,
+  '5':<DateSheet/>,
+  '6': <Settings />,
+  
   }
-
+  const items = [
+            {
+              key: '1',
+              icon: <DashboardCustomize/>,
+              label: 'Home',
+            },
+            {
+              key: '2',
+              icon: <SubjectOutlined />,
+              label: 'Courses',
+            },
+            {
+              key: '3',
+              icon: <RoomPreferences />,
+              label: 'Rooms',
+            },
+            {
+              key: '4',
+              icon: <EventSeatOutlined/>,
+              label: 'Seat Plan',
+            },
+            {
+              key: '5',
+              icon: <CalendarMonth/>,
+              label: 'Datesheet',
+            }, {
+              key: '7',
+              icon: <SettingsOutlined/>,
+              label: 'Settings',
+            },
+          ]
   return (
     <>
-      {/* ================= APP BAR ================= */}
-      <AppBar
-        position="static"
-        elevation={0}
-        sx={{
-          backdropFilter: 'blur(10px)',
-          background: 'rgba(255,255,255,0.15)',
-          borderBottom: '1px solid rgba(255,255,255,0.3)',
-          color: '#000'
-        }}
-      >
-        <Toolbar>
+    <Layout>
+      <Sider trigger={null} collapsible collapsed={collapsed}>
+        <div className="demo-logo-vertical" />
+        <Menu
+          theme="dark"
+          mode="inline"
+          defaultSelectedKeys={['1']}
+          items={items}
+          onClick={(e)=>{
+            console.log("items",e?.key)
+            setSelectedKey(e?.key)
+          }}
+        />
+      </Sider>
+      <Layout>
+        <Header style={{ padding: 0, background: colorBgContainer }}>
+          <Button
+            type="text"
+            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+            onClick={() => setCollapsed(!collapsed)}
+            style={{
+              fontSize: '16px',
+              width: 64,
+              height: 64,
+            }}
+          />
+        </Header>
+        <Content
+          style={{
+            margin: '24px 16px',
+            padding: 24,
+            minHeight: 280,
+            background: colorBgContainer,
+            borderRadius: borderRadiusLG,
+          }}
+        >
+          {Component[selectedKey]}
+        </Content>
+      </Layout>
+    </Layout>
 
-          {/* LEFT: LOGO + TITLE */}
-          <Box
-            sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
-            onClick={() => navigate('/dashboard')}
-          >
-            <SchoolIcon sx={{ fontSize: 32, mr: 1 }} />
 
-            <Box>
-              <Typography fontWeight="bold" lineHeight={1.2}>
-                ExamPortal
-              </Typography>
-              <Typography variant="caption" color="text.secondary">
-                Admin Portal
-              </Typography>
-            </Box>
-          </Box>
-
-          {/* SPACER */}
-          <Box sx={{ flexGrow: 1 }} />
-
-          {/* MOBILE MENU ICON */}
-          <IconButton
-            sx={{ display: { md: 'none' } }}
-            onClick={() => setOpen(true)}
-          >
-            <Menu />
-          </IconButton>
-
-          {/* DESKTOP MENU */}
-          <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 1 }}>
-            {menuItems.map((item) => (
-              <Button
-                key={item.text}
-                onClick={() => navigate(item.path)}
-                sx={{
-                  color: isActive(item.path) ? '#1976d2' : '#000',
-                  fontWeight: isActive(item.path) ? 'bold' : 'normal',
-                  borderBottom: isActive(item.path)
-                    ? '2px solid #1976d2'
-                    : '2px solid transparent',
-                  borderRadius: 0
-                }}
-              >
-                {item.text}
-              </Button>
-            ))}
-
-            <Button
-              onClick={() => navigate('/settings')}
-              sx={{
-                color: isActive('/settings') ? '#1976d2' : '#000',
-                borderBottom: isActive('/settings')
-                  ? '2px solid #1976d2'
-                  : '2px solid transparent',
-                borderRadius: 0
-              }}
-            >
-              Settings
-            </Button>
-          </Box>
-        </Toolbar>
-      </AppBar>
-
-      {/* ================= DRAWER (MOBILE) ================= */}
-      <Drawer
-        open={open}
-        onClose={() => setOpen(false)}
-        sx={{
-          display: { md: 'none' },
-          '& .MuiDrawer-paper': {
-            width: 260,
-            backgroundColor: '#fff'
-          }
-        }}
-      >
-        <Box sx={{ p: 2 }}>
-          {/* Drawer Header */}
-          <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-            <SchoolIcon sx={{ mr: 1 }} />
-            <Box>
-              <Typography fontWeight="bold">ExamPortal</Typography>
-              <Typography variant="caption">Admin Portal</Typography>
-            </Box>
-          </Box>
-
-          <Divider />
-
-          {/* Drawer Menu */}
-          <List>
-            {menuItems.map((item) => (
-              <ListItem key={item.text} disablePadding>
-                <ListItemButton onClick={() => handleNavigate(item.path)}>
-                  <ListItemText
-                    primary={item.text}
-                    primaryTypographyProps={{
-                      color: isActive(item.path) ? 'primary' : 'text.primary',
-                      fontWeight: isActive(item.path) ? 'bold' : 'normal'
-                    }}
-                  />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
-
-          <Divider />
-
-          <List>
-            <ListItem disablePadding>
-              <ListItemButton onClick={() => handleNavigate('/settings')}>
-                <ListItemText
-                  primary="Settings"
-                  primaryTypographyProps={{
-                    color: isActive('/settings') ? 'primary' : 'text.primary',
-                    fontWeight: isActive('/settings') ? 'bold' : 'normal'
-                  }}
-                />
-              </ListItemButton>
-            </ListItem>
-          </List>
-        </Box>
-      </Drawer>
     </>
   )
 }
 
-export default Header
+export default Adminlayout

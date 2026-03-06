@@ -4,7 +4,7 @@ import { Navigate } from 'react-router'
 
 const ProtectedRoute = ({children}) => {
     const {auth} = useContext(GlobalState)
-    return  auth ? children : <Navigate  to="/login"/>
+    return  auth ? children : <Navigate  to="/"/>
 
 }
 

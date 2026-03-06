@@ -5,7 +5,8 @@ export const GlobalState = createContext()
 
 
 const StateManagement = ({ children }) => {
-    const [auth, setAuth] = useState()
+    const [auth, setAuth] = useState( sessionStorage.getItem("jwtToken") || null)
+    
     return (
         <GlobalState.Provider value={{ auth, setAuth }}>
             {children}
