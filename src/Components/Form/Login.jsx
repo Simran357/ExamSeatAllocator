@@ -19,8 +19,8 @@ const Login = () => {
         sessionStorage.setItem("jwtToken", res?.data?.jwtToken)
         console.log("login jwt token geneerated", res?.data?.jwtToken)
         setState(res?.data?.message)
-        setAuth(res?.data?.jwtToken)
-        console.log("successfull login ", res?.data?.message)
+setAuth(true)       
+ console.log("successfull login ", res?.data?.message)
         setTimeout(()=>{
   navigate("/dashboard")
 },2000)

@@ -1,18 +1,24 @@
 const jwt = require("jsonwebtoken")
 
 const CheckToken =(req,res,next)=>{
+    console.log("chcektoken:", req.cookies.jwtToken)
     try{
-    const jwtToken = req.headers.authorization?.split(" ")[1]
+    const jwtToken =  req.cookies.jwtToken
+
     if(!jwtToken){
-        res.status(4001).json({
+        res.status(401).json({
             success:false,
             message:"unauthorized access , token is not present "})
     }
 
     const verifyToken = jwt.verify(jwtToken,"simran")
-    return verifyToken
+      next()
 
-}catch{(err)=>{next(err)}}
+
+}catch(err){
+    next(err)
+
+}
 
 }
 

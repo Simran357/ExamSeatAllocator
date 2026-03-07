@@ -6,18 +6,18 @@ const axiosInstance = axios.create({
     withCredentials:true
 })
 
-axiosInstance.interceptors.request.use(
-    (config)=>{
-     const jwtToken = sessionStorage.getItem("jwtToken")
-     console.log("the jwtToken is getting from instance",jwtToken)
-     if(jwtToken){
-     config.headers.authorization = `Bearer ${jwtToken}`
+// axiosInstance.interceptors.request.use(
+//     (config)=>{
+//      const jwtToken = sessionStorage.getItem("jwtToken")
+//      console.log("the jwtToken is getting from instance",jwtToken)
+//      if(jwtToken){
+//      config.headers.authorization = `Bearer ${jwtToken}`
 
-     }
-         return config
+//      }
+//          return config
 
-    }
-)
+//     }
+// )
 
 
 axiosInstance.interceptors.response.use((response)=>{

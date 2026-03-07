@@ -31,7 +31,7 @@ const registercontrol = async (req, res, next) => {
 
 
     await newUser.save()
-    res.status(200).json({ staus:true, message: "user registered successfully" })
+    res.status(200).json({ status:true, message: "user registered successfully" })
 }catch (error) {
   next(error);
   console.log("Error in registration:", error);
