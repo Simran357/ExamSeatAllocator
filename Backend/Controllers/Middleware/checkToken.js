@@ -2,8 +2,7 @@ const jwt = require("jsonwebtoken")
 
 const CheckToken =(req,res,next)=>{
     console.log("chcektoken:", req.cookies.jwtToken)
-    try{
-    const jwtToken =  req.cookies.jwtToken
+    try{    const jwtToken =  req.cookies.jwtToken
 
     if(!jwtToken){
         res.status(401).json({

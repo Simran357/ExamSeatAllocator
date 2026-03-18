@@ -1,3 +1,7 @@
+const dns = require("node:dns")
+dns.setServers(["8.8.8.8","8.8.4.4"])
+
+
 const mongoose = require("mongoose")
 const express = require("express")
 const routes  = require("./routes/index")
@@ -12,7 +16,7 @@ app.use(cors({
     credentials:true
 }))
 app.use(routes)
-mongoose.connect("mongodb+srv://simran26788_db_user:Nrh89CxOUsKuqGiT@cluster0.bu7aqhe.mongodb.net/").then(()=>{
+mongoose.connect("mongodb+srv://simran26788_db_user:De4LHTTcgawaBa9G@cluster0.bu7aqhe.mongodb.net/").then(()=>{
     const port = 5002;
     app.listen(port)
     console.log("connected to mongodb")

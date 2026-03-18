@@ -27,7 +27,11 @@ const googleLogin = async (req,res,next)=>{
       })
    }
 
-   const jwtToken = jwt.sign({userId:user._id}, "simran",{expiresIn: "1h"})
+        const userPayload = {
+            userId: user._id,
+            userRole :user.role
+        }
+        const jwtToken = jwt.sign({ user: userPayload }, "simran", { expiresIn: "1h" });
 
    res.cookie("jwtToken", jwtToken,{
       maxAge:3600000,
@@ -36,7 +40,7 @@ const googleLogin = async (req,res,next)=>{
    res.status(200).json({
       status:true,
       message:"Google login successful",
-      jwtToken
+  user:userPayload
    })
 
    }catch(error){
